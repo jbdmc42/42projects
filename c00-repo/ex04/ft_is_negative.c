@@ -6,7 +6,7 @@
 /*   By: jbdmc <jbdmc@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:48:22 by jbdmc             #+#    #+#             */
-/*   Updated: 2025/02/23 11:02:06 by jbdmc            ###   ########.fr       */
+/*   Updated: 2025/02/23 16:00:07 by jbdmc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void    ft_is_negative(int n)
     }
 }
 
-int main(void)
+/*int main(void)
 {
     ft_is_negative(0);
     return(0);
-}
+}*/
