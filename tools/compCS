@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo -e "\e[1;31;40mSyntax\e[1;0;40m: \e[1;95;40mcompCS\e[1;91;40m <\e[1;95;40mfile_name\e[1;91;40m>"
+    echo -e "\e[1;0;40mAfter compiling, use \e[1;91;40m./<\e[1;95;40mfile_name\e[1;91;40m>\e[0m"
+    exit 1
+fi
+
+arquivo="$1"
+output="${arquivo%.c}"
+
+cc -Wall -Wextra -Werror "$arquivo" -o "$output"
+
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;0;40mCompilation Successful! \e[1;31;40mExecutable file\e[1;0;40m: \e[1;95;40m$output\e[0m\n"
+    
+    echo -e "\e[1;31;40mApplying \e[1;95;40mchmod \e[1;31;40mpermissions...\e[0m\n\n"
+    chmod 711 "$output"
+    echo -e "\e[1;31mINFO TABLE:\e[0m"
+    echo -e "\n\e[1;31m---| PERMISSIONS -----| LINKS -----| USER -----| GROUP -----| SIZE -----| FULL TIMESTAMP -----------------------| FILE NAME -------------------------------------------|\e[0m"
+    
+    # Formatar a saída do ls para garantir alinhamento com os títulos
+    ls --full-time -l "$output" | awk '{
+        printf "   | %-12s     | %-6s     | %-5s     | %-6s     | %-5s     | %-15s   | %-62s", $1, $2, $3, $4, $5, $6" "$7" "$8, $9
+    }'
+    echo -e "\n\e[1;31m---|------------------|------------|-----------|------------|-----------|---------------------------------------|------------------------------------------------------|\e[0m"
+    echo -e "\n\e[1;31;40mExecuting \e[1;95;40m$output \e[1;31;40mfor diplay...\e[0m"
+    echo -e "\n\n\e[1;31mOUTPUT DISPLAY:\e[0m"
+    echo -e "\n\e[1;31m---|----------------------------------------------------------| COMPILED FILE: \e[1;95m$output \e[1;31m|-------------------------------------------------------------|\e[0m"
+    printf "   | "
+    ./"$output"
+    printf "%-135s"
+    echo -e "\n\e[1;31m---|----------------------------------------------------------| COMPILED FILE: \e[1;95m$output \e[1;31m|-------------------------------------------------------------|\e[0m"
+else
+    echo -e "\e[1;31;40mCompilation Error\e[1;0;40m: \e[1;31;40mPlease check the debug log\e[1;0;40m.\e[0m"
+fi
